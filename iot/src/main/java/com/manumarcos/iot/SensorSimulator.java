@@ -81,7 +81,7 @@ public class SensorSimulator implements CommandLineRunner {
 
             try {
                 // Espera 2 segundos entre iteraciones
-                Thread.sleep(2);
+                Thread.sleep(5);
             } catch (InterruptedException e) {
                 log.warn("Sensor simulator interrupted", e);
                 Thread.currentThread().interrupt();
