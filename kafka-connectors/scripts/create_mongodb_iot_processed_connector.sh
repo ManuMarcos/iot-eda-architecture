@@ -1,9 +1,8 @@
 #!/bin/sh
 
-# --- Cargar variables del .env ---
-# Ignora líneas vacías o comentarios
-if [ -f .env ]; then
-  export $(grep -v '^#' .env | xargs)
+ENV_FILE="../.env"
+if [ -f "$ENV_FILE" ]; then
+  export $(grep -v '^#' "$ENV_FILE" | xargs)
 fi
 
 # Verifica que la variable esté definida

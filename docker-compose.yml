@@ -1,9 +1,4 @@
-
-
 services:
-  # Eclipse Mosquitto is an open source (EPL/EDL licensed) message broker that implements the MQTT protocol versions 5.0, 3.1.1 and 3.1. Mosquitto is lightweight and is suitable for use on all devices from low power single board computers to full servers.
-  # The MQTT protocol provides a lightweight method of carrying out messaging using a publish/subscribe model. This makes it suitable for Internet of Things messaging such as with low power sensors or mobile devices such as phones, embedded computers or microcontrollers.
-  # The Mosquitto project also provides a C library for implementing MQTT clients, and the very popular mosquitto_pub and mosquitto_sub command line MQTT clients.
   mosquitto:
     image: eclipse-mosquitto:latest
     hostname: mosquitto
@@ -36,6 +31,18 @@ services:
       KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
     ports:
       - "29092:29092"
+
+  kafka-ui:
+    container_name: kafka-ui
+    image: provectuslabs/kafka-ui:latest
+    depends_on:
+      - kafka
+    ports:
+      - "8080:8080"
+    environment:
+      KAFKA_CLUSTERS_0_NAME: local
+      KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
+
 
   kafka-connect:
     image: confluentinc/cp-kafka-connect:7.5.0
@@ -74,20 +81,34 @@ services:
         sleep 5
         done
         nc -vz $$CONNECT_REST_ADVERTISED_HOST_NAME $$CONNECT_REST_PORT
+        echo -e "\n--\n+> Creating Kafka Connect MongoDB sink Current PATH ($$PWD)"
+        /data/scripts/create_mongodb_iot_processed_connector.sh 
         echo -e "\n--\n+> Creating MQTT Source Connect Current PATH ($$PWD)"
         /data/scripts/create_mqtt_connectors.sh
         sleep infinity
-        # kafka-connect relies upon Kafka and ZooKeeper.
-        # This will instruct docker to wait until those services are up
-        # before attempting to start kafka-connect.
     ports:
       - "8083:8083"
-  sensor-app:
+
+  sensors-service:
     build:
-      context: ./iot
+      context: ./sensors-service
       dockerfile: Dockerfile
-    container_name: sensor-app
+    container_name: sensors-service
     depends_on:
       - mosquitto
     environment:
       MQTT_BROKER: "tcp://mosquitto:1883"
+
+  notifications-service:
+    build:
+      context: ./notifications-service
+      dockerfile: Dockerfile
+    container_name: notifications-service
+    depends_on:
+      - kafka
+    environment:
+      KAFKA_SERVER: kafka:9092
+
+
+
+
