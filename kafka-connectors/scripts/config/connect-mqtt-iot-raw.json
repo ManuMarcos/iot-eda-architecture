@@ -9,10 +9,7 @@
     "value.converter" : "org.apache.kafka.connect.converters.ByteArrayConverter",
     "converter.encoding" : "UTF-8",
     "bootstrap.servers" : "kafka:9092",
-    "confluent.topic.boostrap.servers" : "kafka:9092",
-    "confluent.topic.replication.factor" : 1,
-    "transforms": "InsertTopic",
-    "transforms.InsertTopic.type": "org.apache.kafka.connect.transforms.InsertField$Value",
-    "transforms.InsertTopic.topic.field": "mqtt_topic"
+    "confluent.topic.bootstrap.servers" : "kafka:9092",
+    "confluent.topic.replication.factor" : 1
   }
 }

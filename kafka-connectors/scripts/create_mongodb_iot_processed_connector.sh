@@ -1,17 +1,10 @@
 #!/bin/sh
 
-ENV_FILE="../.env"
-if [ -f "$ENV_FILE" ]; then
-  export $(grep -v '^#' "$ENV_FILE" | xargs)
-fi
-
-# Verifica que la variable esté definida
 if [ -z "$MONGO_URI" ]; then
-  echo "Error: MONGO_URI no está definida en .env"
+  echo "Error: MONGO_URI no está definida en el entorno"
   exit 1
 fi
 
-# --- Construir el JSON dinámicamente ---
 JSON_BODY=$(cat <<EOF
 {
   "name": "mongodb-iot-processed-connector",
@@ -31,7 +24,4 @@ EOF
 )
 
 # --- Hacer POST al endpoint de Kafka Connect ---
-curl -X POST \
-     -H "Content-Type: application/json" \
-     --data "$JSON_BODY" \
-     http://kafka-connect:8083/connectors
+curl -X POST -H "Content-Type: application/json" --data-binary "$JSON_BODY" http://kafka-connect:8083/connectors

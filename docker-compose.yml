@@ -66,6 +66,7 @@ services:
       CONNECT_CONFIG_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_OFFSET_STORAGE_REPLICATION_FACTOR: 1
       CONNECT_STATUS_STORAGE_REPLICATION_FACTOR: 1
+      MONGO_URI: "${MONGO_URI}"
     volumes:
       - ./kafka-connectors:/data
     command:
@@ -82,7 +83,7 @@ services:
         done
         nc -vz $$CONNECT_REST_ADVERTISED_HOST_NAME $$CONNECT_REST_PORT
         echo -e "\n--\n+> Creating Kafka Connect MongoDB sink Current PATH ($$PWD)"
-        /data/scripts/create_mongodb_iot_processed_connector.sh 
+        sh /data/scripts/create_mongodb_iot_processed_connector.sh 
         echo -e "\n--\n+> Creating MQTT Source Connect Current PATH ($$PWD)"
         /data/scripts/create_mqtt_connectors.sh
         sleep infinity
