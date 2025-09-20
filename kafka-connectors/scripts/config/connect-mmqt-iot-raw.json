@@ -1,0 +1,18 @@
+{
+  "name" : "mqtt-iot-raw-connector",
+  "config": {
+    "connector.class" : "io.confluent.connect.mqtt.MqttSourceConnector",
+    "task.max" : "1",
+    "mqtt.server.uri" : "tcp://mosquitto:1883",
+    "mqtt.topics" : "la_rinconada/#",
+    "kafka.topic": "iot-raw",
+    "value.converter" : "org.apache.kafka.connect.converters.ByteArrayConverter",
+    "converter.encoding" : "UTF-8",
+    "bootstrap.servers" : "kafka:9092",
+    "confluent.topic.boostrap.servers" : "kafka:9092",
+    "confluent.topic.replication.factor" : 1,
+    "transforms": "InsertTopic",
+    "transforms.InsertTopic.type": "org.apache.kafka.connect.transforms.InsertField$Value",
+    "transforms.InsertTopic.topic.field": "mqtt_topic"
+  }
+}
