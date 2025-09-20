@@ -60,7 +60,6 @@ public class SensorSimulator implements CommandLineRunner {
             for (IotSensor sensor : sensors) {
                 CompletableFuture.supplyAsync(() -> {
                             try {
-                                // Ejecuta el sensor y genera datos
                                 SensorDataDTO data = sensor.call();
                                 log.debug("Sensor {} generated data: {}", sensor.getSensorId(), data);
                                 return data;
@@ -80,7 +79,7 @@ public class SensorSimulator implements CommandLineRunner {
 
             try {
                 // Espera 2 segundos entre iteraciones
-                Thread.sleep(5);
+                Thread.sleep(5000);
             } catch (InterruptedException e) {
                 log.warn("Sensor simulator interrupted", e);
                 Thread.currentThread().interrupt();
