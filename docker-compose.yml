@@ -148,6 +148,7 @@ services:
     container_name: spark-job
     depends_on:
       - kafka
+      - kafka-connect
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
     command: >
@@ -155,6 +156,7 @@ services:
       --master local[*]
       --packages org.apache.spark:spark-sql-kafka-0-10_2.13:3.5.0
       main.py
+    restart: always
 
 volumes:
   portainer_data:
