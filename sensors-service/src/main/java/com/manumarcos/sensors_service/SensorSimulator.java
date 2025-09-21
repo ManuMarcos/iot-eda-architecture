@@ -35,26 +35,34 @@ public class SensorSimulator implements CommandLineRunner {
     public void run(String... args) throws Exception {
         List<IotSensor> sensors = Arrays.asList(
                 //Water sensors
-                new WaterSensor("la_rinconada", "mercedes", "w001"),
-                new WaterSensor("la_rinconada", "mercedes", "w002"),
-                new WaterSensor("la_rinconada", "junin", "w003"),
-                new WaterSensor("la_rinconada", "junin", "w004"),
-                new WaterSensor("la_rinconada", "junin", "w004"),
+                new WaterSensor("la_rinconada", "mercedes", "w-me-01"),
+                new WaterSensor("la_rinconada", "mercedes", "w-me-02"),
+                new WaterSensor("la_rinconada", "junin", "w-ju-01"),
+                new WaterSensor("la_rinconada", "junin", "w-ju-02"),
+                new WaterSensor("la_rinconada", "junin", "w-ju-03"),
+                new WaterSensor("la_rinconada", "areco", "w-ar-01"),
+                new WaterSensor("la_rinconada", "areco", "w-ar-02"),
 
                 //Air Sensors
-                new AirSensor("la_rinconada", "mercedes", "a001"),
-                new AirSensor("la_rinconada", "mercedes", "a002"),
-                new AirSensor("la_rinconada", "junin", "a003"),
-                new AirSensor("la_rinconada", "junin", "a004"),
-                new AirSensor("la_rinconada", "junin", "a005"),
+                new AirSensor("la_rinconada", "mercedes", "a-me-01"),
+                new AirSensor("la_rinconada", "mercedes", "a-me-02"),
+                new AirSensor("la_rinconada", "junin", "a-ju-01"),
+                new AirSensor("la_rinconada", "junin", "a-ju-02"),
+                new AirSensor("la_rinconada", "junin", "a-ju-03"),
+                new AirSensor("la_rinconada", "areco", "a-ar-01"),
+                new AirSensor("la_rinconada", "areco", "a-ar-02"),
 
                 //Energy Sensors
-                new EnergySensor("la_rinconada", "mercedes", "e001"),
-                new EnergySensor("la_rinconada", "mercedes", "e002"),
-                new EnergySensor("la_rinconada", "junin", "e003"),
-                new EnergySensor("la_rinconada", "mercedes", "e004"),
-                new EnergySensor("la_rinconada", "junin", "e005")
+                new EnergySensor("la_rinconada", "mercedes", "e-me-01"),
+                new EnergySensor("la_rinconada", "mercedes", "e-me-02"),
+                new EnergySensor("la_rinconada", "junin", "e-ju-01"),
+                new EnergySensor("la_rinconada", "junin", "e-ju-02"),
+                new EnergySensor("la_rinconada", "junin", "e-ju-03"),
+                new EnergySensor("la_rinconada", "areco", "e-ar-01"),
+                new EnergySensor("la_rinconada", "areco", "e-ar-02")
                 );
+
+
 
         while (true) {
             for (IotSensor sensor : sensors) {
@@ -78,7 +86,6 @@ public class SensorSimulator implements CommandLineRunner {
             }
 
             try {
-                // Espera 2 segundos entre iteraciones
                 Thread.sleep(5000);
             } catch (InterruptedException e) {
                 log.warn("Sensor simulator interrupted", e);
