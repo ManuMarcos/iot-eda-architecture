@@ -3,6 +3,7 @@
 
 from pyspark.sql.functions import sum, from_unixtime, col, date_format, lit, current_timestamp, to_json, struct, concat, when, coalesce
 import time
+from config import KAFKA_BOOTSTRAP_SERVERS
 
 def calculate_totals(df):
     print("entro a totales")
@@ -59,7 +60,7 @@ def calculate_totals(df):
     query = (
         df_kafka.writeStream
         .format("kafka")
-        .option("kafka.bootstrap.servers", "44.223.188.196:29092")
+        .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS)
         .option("topic", "iot-processed")
         .option("checkpointLocation", "./tmp/checkpoint_totals")
         .trigger(processingTime='1 minute')

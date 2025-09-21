@@ -3,6 +3,7 @@ from pyspark.sql.functions import count, col, from_unixtime, year, avg, lit, dat
 from pyspark.sql.functions import to_json, struct, col, lit
 import time
 from datetime import datetime
+from config import KAFKA_BOOTSTRAP_SERVERS
 
 def calculate_histogram(df):
     print("entro a histogram")
@@ -59,7 +60,7 @@ def calculate_histogram(df):
     query = (
         df_kafka.writeStream
         .format("kafka")
-        .option("kafka.bootstrap.servers", "44.223.188.196:29092")
+        .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS)
         .option("topic", "iot-processed")
         .option("checkpointLocation", "./tmp/checkpoint_histograms")
         .trigger(processingTime='1 minute')

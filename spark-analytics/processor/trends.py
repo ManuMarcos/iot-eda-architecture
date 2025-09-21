@@ -1,6 +1,9 @@
 from pyspark.sql.functions import current_timestamp, when, from_unixtime, window, col, min as spark_min, max as spark_max, avg, date_format, lit
 import time
 from pyspark.sql.functions import to_json, struct, col, lit
+from config import KAFKA_BOOTSTRAP_SERVERS
+
+
 
 def calculate_trends(df):
     print("entro a trends")
@@ -61,7 +64,7 @@ def calculate_trends(df):
     query = (
         df_kafka.writeStream
         .format("kafka")
-        .option("kafka.bootstrap.servers", "44.223.188.196:29092")
+        .option("kafka.bootstrap.servers", KAFKA_BOOTSTRAP_SERVERS)
         .option("topic", "iot-processed")
         .option("checkpointLocation", "./tmp/checkpoint_trends")
         .trigger(processingTime='1 minute')
