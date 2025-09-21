@@ -1,3 +1,5 @@
+server:
+  port: 8084
 spring:
   application:
     name: notifications-service
@@ -9,4 +11,15 @@ spring:
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
+
+  mail:
+    host: ${MAIL_SERVER}
+    port: ${MAIL_SERVER_PORT}
+
+  data:
+    mongodb:
+      uri: ${MONGO_URI}
+      database: notifications-service-db
+      auto-index-creation: true
+
 

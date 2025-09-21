@@ -1,4 +1,24 @@
-package com.manumarcos.notifications_service.service;
+package com.manumarcos.notifications_service.service.impl;
 
-public class EmailServiceImpl {
+import com.manumarcos.notifications_service.service.IEmailService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.mail.SimpleMailMessage;
+import org.springframework.mail.javamail.JavaMailSender;
+import org.springframework.stereotype.Service;
+
+@Service
+@RequiredArgsConstructor
+public class EmailServiceImpl implements IEmailService {
+
+    private final JavaMailSender emailSender;
+
+    @Override
+    public void sendSimpleMessage(String to, String subject, String text) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setFrom("notificationsservice@ecosense.com");
+        message.setTo(to);
+        message.setSubject(subject);
+        message.setText(text);
+        emailSender.send(message);
+    }
 }

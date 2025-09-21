@@ -5,6 +5,7 @@ services:
     container_name: mosquitto
     ports:
       - "1883:1883"
+      - "9001:9001"
     volumes:
       - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
@@ -42,7 +43,6 @@ services:
     environment:
       KAFKA_CLUSTERS_0_NAME: local
       KAFKA_CLUSTERS_0_BOOTSTRAPSERVERS: kafka:9092
-
 
   kafka-connect:
     image: confluentinc/cp-kafka-connect:7.5.0
@@ -84,11 +84,18 @@ services:
         nc -vz $$CONNECT_REST_ADVERTISED_HOST_NAME $$CONNECT_REST_PORT
         echo -e "\n--\n+> Creating Kafka Connect MongoDB sink Current PATH ($$PWD)"
         sh /data/scripts/create_mongodb_iot_processed_connector.sh 
+        sh /data/scripts/create_mongodb_iot_alerts_connector.sh 
         echo -e "\n--\n+> Creating MQTT Source Connect Current PATH ($$PWD)"
         /data/scripts/create_mqtt_connectors.sh
         sleep infinity
     ports:
       - "8083:8083"
+
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    ports:
+      - "8085:8025"
 
   sensors-service:
     build:
@@ -109,7 +116,9 @@ services:
       - kafka
     environment:
       KAFKA_SERVER: kafka:9092
-
-
-
+      MAIL_SERVER: "mailhog"
+      MAIL_SERVER_PORT: "1025"
+      MONGO_URI: "${MONGO_URI}"
+    ports:
+      - "8084:8084"
 
