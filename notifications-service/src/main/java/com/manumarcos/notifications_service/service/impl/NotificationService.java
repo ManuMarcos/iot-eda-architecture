@@ -39,7 +39,7 @@ public class NotificationService implements INotificationService {
                 los umbrales configurados son min: %f  max:%f
                 se recomienda %s
                 """.formatted(alertDTO.getSensor(), alertDTO.getId(),
-                alertDTO.getAlert_value(), alertDTO.getEvent_time().toString(),
+                alertDTO.getAlert_value(), alertDTO.getDatetime().toString(),
                 alertDTO.getUmbral_min(), alertDTO.getUmbral_max(), alertDTO.getRecommendation());
         //TODO: Consultar base de datos
         List<String> recipients = Arrays.asList("mercedes@larinconada.com");
