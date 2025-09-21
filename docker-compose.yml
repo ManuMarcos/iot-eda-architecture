@@ -9,13 +9,13 @@ services:
       - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
 
-  #mqtt-ui:
-  #  image: ghcr.io/gaetancollaud/mqtt-ui:latest
-  #  environment:
-  #    MQTTUI_MQTT_HOST: mosquitto
-  #    MQTTUI_MQTT_PORT: 1883
-  #  ports:
-  #    - "8081:8080"
+  mqtt-ui:
+    image: ghcr.io/gaetancollaud/mqtt-ui:latest
+    environment:
+      MQTTUI_MQTT_HOST: mosquitto
+      MQTTUI_MQTT_PORT: 1883
+    ports:
+      - "8081:8080"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
@@ -100,11 +100,11 @@ services:
     ports:
       - "8083:8083"
 
-  #mailhog:
-  #  image: mailhog/mailhog:v1.0.1
-  #  container_name: mailhog
-  #  ports:
-  #    - "8085:8025"
+  mailhog:
+    image: mailhog/mailhog:v1.0.1
+    container_name: mailhog
+    ports:
+      - "8085:8025"
 
   sensors-service:
     build:
