@@ -7,11 +7,11 @@ fi
 
 JSON_BODY=$(cat <<EOF
 {
-  "name": "mongodb-iot-processed-connector",
+  "name": "mongodb-iot-alerts-connector",
   "config": {
     "connector.class": "com.mongodb.kafka.connect.MongoSinkConnector",
     "tasks.max": 1,
-    "topics": "iot-processed",
+    "topics": "iot-alerts",
     "connection.uri": "$MONGO_URI",
     "database": "ecosensedb",
     "collection": "alerts",
