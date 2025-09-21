@@ -16,13 +16,15 @@ public class AlertConsumer {
     private final ObjectMapper objectMapper;
     private final INotificationService notificationService;
 
-    @KafkaListener(topics = "iot-alerts", groupId = "alert-mailer-service")
+    @KafkaListener(topics = "iot-alerts", groupId = "notifications-service")
     public void consume(String message){
         try {
             AlertDTO alert = objectMapper.readValue(message, AlertDTO.class);
+            System.out.println("Se recibio un mensaje en iot-alerts: " + message);
             notificationService.send(alert);
         } catch (JsonProcessingException e) {
             System.out.println("Ocurrio un error al leer el mensaje");
+            e.printStackTrace();
         }
     }
 }

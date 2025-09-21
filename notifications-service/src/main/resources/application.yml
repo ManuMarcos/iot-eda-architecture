@@ -7,7 +7,7 @@ spring:
   kafka:
     bootstrap-servers: ${KAFKA_SERVER}
     consumer:
-      group-id: alert-mailer-service
+      group-id: notifications-service
       auto-offset-reset: earliest
       key-deserializer: org.apache.kafka.common.serialization.StringDeserializer
       value-deserializer: org.apache.kafka.common.serialization.StringDeserializer
