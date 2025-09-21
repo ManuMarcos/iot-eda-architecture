@@ -47,14 +47,14 @@ def calculate_thresholds(df):
         col("id"),
         col("field"),
         col("company"),
-        when(col("sensor") == "water", lit("0.01"))
-        .when(col("sensor") == "energy", lit("1.1"))
-        .when(col("sensor") == "air", lit("351"))
+        when(col("sensor") == "water", lit(0.01))
+        .when(col("sensor") == "energy", lit(1.1))
+        .when(col("sensor") == "air", lit(351))
         .otherwise(lit("unknown"))
         .alias("umbral_min"),
-        when(col("sensor") == "water", lit("14.8"))
-        .when(col("sensor") == "energy", lit("14.8"))
-        .when(col("sensor") == "air", lit("598"))
+        when(col("sensor") == "water", lit(14.8))
+        .when(col("sensor") == "energy", lit(14.8))
+        .when(col("sensor") == "air", lit(598))
         .otherwise(lit("unknown"))
         .alias("umbral_max"),
         col("alert_value"),
