@@ -8,6 +8,7 @@ services:
     volumes:
       - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
 
+
   mqtt-ui:
     image: ghcr.io/gaetancollaud/mqtt-ui:latest
     environment:
@@ -129,3 +130,17 @@ services:
       MONGO_URI: "${MONGO_URI}"
     ports:
       - "8084:8084"
+
+  portainer:
+    image: portainer/portainer-ce:latest
+    container_name: portainer
+    command: -H unix:///var/run/docker.sock
+    ports:
+      - "9000:9000"
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    restart: always
+
+volumes:
+  portainer_data:
