@@ -5,9 +5,16 @@ services:
     container_name: mosquitto
     ports:
       - "1883:1883"
-      - "9001:9001"
     volumes:
       - ./config/mosquitto.conf:/mosquitto/config/mosquitto.conf
+
+  mqtt-ui:
+    image: ghcr.io/gaetancollaud/mqtt-ui:latest
+    environment:
+      MQTTUI_MQTT_HOST: mosquitto
+      MQTTUI_MQTT_PORT: 1883
+    ports:
+      - "8081:8080"
 
   zookeeper:
     image: confluentinc/cp-zookeeper:7.5.0
@@ -122,4 +129,3 @@ services:
       MONGO_URI: "${MONGO_URI}"
     ports:
       - "8084:8084"
-
