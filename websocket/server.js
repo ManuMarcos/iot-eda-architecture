@@ -1,8 +1,8 @@
 import { WebSocketServer } from 'ws';
 import { Kafka } from 'kafkajs';
 
-const wss = new WebSocketServer({ port: 8080 });
-console.log('Servidor WebSocket escuchando en ws://localhost:8080');
+const wss = new WebSocketServer({ port: 5000 });
+console.log('Servidor WebSocket escuchando en ws://localhost:5000');
 
 const kafka = new Kafka({
   clientId: 'dashboard-app',

@@ -78,7 +78,7 @@ export default function Page() {
 
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:8080');
+    const ws = new WebSocket('ws://localhost:5000');
 
     ws.onopen = () => {
       console.log('Conectado al WebSocket');
