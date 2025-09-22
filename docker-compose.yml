@@ -99,6 +99,11 @@ services:
         sleep infinity
     ports:
       - "8083:8083"
+    healthcheck:
+      test: [ "CMD", "curl", "-f", "http://localhost:8083/connectors" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
 
   mailhog:
     image: mailhog/mailhog:v1.0.1
@@ -147,16 +152,18 @@ services:
       context: ./spark-analytics
     container_name: spark-job
     depends_on:
-      - kafka
-      - kafka-connect
+      kafka-connect:
+        condition: service_healthy
+      kafka:
+        condition: service_started
     environment:
       - KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    restart: unless-stopped
     command: >
       spark-submit
       --master local[*]
       --packages org.apache.spark:spark-sql-kafka-0-10_2.13:3.5.0
       main.py
-    restart: always
 
 volumes:
   portainer_data:
