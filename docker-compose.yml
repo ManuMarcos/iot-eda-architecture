@@ -174,8 +174,8 @@ services:
       - "8087:3000"
     command: npx next start -p 3000 -H 0.0.0.0
     environment:
-      - MONGODB_URI=${MONGO_URI}
-      - NEXT_PUBLIC_WEBSOCKET_URL=websocket:5000
+      MONGODB_URI: "${MONGO_URI}"
+      NEXT_PUBLIC_WEBSOCKET_URL: websocket:5000
     restart: unless-stopped
 
   websocket:
