@@ -165,5 +165,30 @@ services:
       --packages org.apache.spark:spark-sql-kafka-0-10_2.13:3.5.0
       main.py
 
+  dashboard:
+    build: ./dashboard
+    depends_on:
+      - websocket
+    container_name: dashboard
+    env_file:
+      - ./dashboard/.env
+    ports:
+      - "8087:3000"
+    command: npx next start -p 3000 -H 0.0.0.0
+    environment:
+      - MONGODB_URI=${MONGO_URI}
+      - NEXT_PUBLIC_WEBSOCKET_URL=websocket:5000
+    restart: unless-stopped
+
+  websocket:
+    build: ./websocket
+    depends_on:
+      kafka-connect:
+        condition: service_healthy
+      kafka:
+        condition: service_started
+    container_name: websocket
+    restart: unless-stopped
+
 volumes:
   portainer_data:
