@@ -78,7 +78,9 @@ export default function Page() {
 
 
   useEffect(() => {
-    const ws = new WebSocket('ws://localhost:5000');
+    const ws_url = process.env.NEXT_PUBLIC_WEBSOCKET_URL;
+    if (!ws_url) return;
+    const ws = new WebSocket(ws_url);
 
     ws.onopen = () => {
       console.log('Conectado al WebSocket');
