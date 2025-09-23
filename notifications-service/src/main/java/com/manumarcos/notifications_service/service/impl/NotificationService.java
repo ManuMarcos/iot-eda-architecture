@@ -2,6 +2,7 @@ package com.manumarcos.notifications_service.service.impl;
 
 import com.manumarcos.notifications_service.dto.AlertDTO;
 import com.manumarcos.notifications_service.model.Notification;
+import com.manumarcos.notifications_service.repository.ICompanyContactsRepository;
 import com.manumarcos.notifications_service.repository.INotificationsRepository;
 import com.manumarcos.notifications_service.service.IEmailService;
 import com.manumarcos.notifications_service.service.INotificationService;
@@ -20,6 +21,7 @@ public class NotificationService implements INotificationService {
 
     private final INotificationsRepository notificationsRepository;
     private final IEmailService emailService;
+    private final CompanyContactsService companyContactsService;
 
     @Override
     public List<Notification> getAll() {
@@ -41,8 +43,7 @@ public class NotificationService implements INotificationService {
                 """.formatted(alertDTO.getSensor(), alertDTO.getId(),
                 alertDTO.getAlert_value(), alertDTO.getDatetime().toString(),
                 alertDTO.getUmbral_min(), alertDTO.getUmbral_max(), alertDTO.getRecommendation());
-        //TODO: Consultar base de datos
-        List<String> recipients = Arrays.asList("mercedes@larinconada.com");
+        List<String> recipients = companyContactsService.getEmailsForField(alertDTO.getCompany(), alertDTO.getField());
         for(String recipient : recipients){
             emailService.sendSimpleMessage(recipient,subject, text);
         }
