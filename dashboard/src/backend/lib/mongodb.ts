@@ -3,9 +3,7 @@ import { MongoClient, Db } from "mongodb";
 const uri = process.env.MONGODB_URI;
 const options = {};
 
-if (!uri && process.env.NODE_ENV !== "production") {
-  throw new Error("Debes definir MONGODB_URI en tu .env local");
-}
+if (!uri) throw new Error("Debes definir MONGODB_URI en .env");
 
 let client: MongoClient;
 let clientPromise: Promise<MongoClient>;
